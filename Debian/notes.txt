@@ -1,0 +1,8 @@
+Remove swap:
+
+Edit fstab
+Edit /etc/initramfs-tools/conf.d/resume
+swapoff -a
+delete the partition
+grub-mkconfig -o /boot/grub/grub.cfg
+update-initramfs -u -k all
