@@ -6,7 +6,7 @@ set -e
 
 apk add --no-cache sudo vim curl
 
-useradd $USERNAME
+adduser $USERNAME
 
 mkdir -p /home/$USERNAME/.ssh
 curl https://github.com/$GITHUBUSER.keys > /home/$USERNAME/.ssh/authorized_keys
