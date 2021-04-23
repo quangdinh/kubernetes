@@ -64,7 +64,6 @@ frontend main_https
   bind 	*:443 ssl crt /etc/haproxy/ssl/
   http-request redirect scheme https unless { ssl_fc }
   mode	http	
-  option	httplog
   
   #acl host_sub hdr(host) -i sub.mydomain.com
   #use_backend sub if host_sub
