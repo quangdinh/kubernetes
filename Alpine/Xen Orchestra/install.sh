@@ -68,8 +68,7 @@ su node -c 'mkdir -p ~/.config/xo-server'
 mkdir -p /storage/data
 chown -R node:node /storage
 
-cat <<EOF | tee ~/.config/xo-server/config.toml
-
+cat <<EOF | tee /home/node/.config/xo-server/config.toml
 datadir = '/storage/data'
 resourceCacheDelay = '5m'
 createUserOnFirstSignin = true
@@ -119,7 +118,6 @@ maxMergedDeltasPerRun = 2
 enabled = false
 threshold = 1000
 
-
 [[http.listen]]
 port = 8080
 
@@ -134,7 +132,6 @@ port = 8080
 [remoteOptions]
 mountsDir = '/run/xo-server/mounts'
 timeout = 600e3
-
 
 [selfService]
 ignoreVmSnapshotResources = false
@@ -159,17 +156,19 @@ vmTag = 'XOA Proxy'
 xoaUpgradeTimeout = '5 min'
 EOF
 
+chown node:node /home/node/.config/xo-server/config.toml
+
 cat <<EOF | tee /etc/init.d/xen-orchestra
 #!/sbin/openrc-run
 
 user="node"
 group="node"
 command="/usr/bin/yarn"
-directory="/home/node/xen-orchestra/package/xo-server"
+directory="/home/node/xen-orchestra/packages/xo-server"
 command_args="start"
-command_user="${user}:${group}"
+command_user="\${user}:\${group}"
 command_background="yes"
-pidfile="/run/$RC_SVCNAME}.pid"
+pidfile="/run/\${RC_SVCNAME}.pid"
 
 depend() {
   use net
