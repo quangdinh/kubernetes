@@ -23,6 +23,9 @@ cat <<EOF | tee /etc/iptables/rules-save
 COMMIT
 EOF
 
+iptables-restore < /etc/iptables/rules-save
+/etc/init.d/iptables save
+
 cat <<EOF | tee /etc/haproxy/haproxy.cfg
 
 global
@@ -84,7 +87,3 @@ backend k8s
   server k8s-3 10.10.1.13:80 check
 
 EOF
-
-iptables-restore < /etc/iptables/rules-save
-
-/etc/init.d/iptables save
